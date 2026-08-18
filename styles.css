@@ -1,0 +1,237 @@
+/* ===================================================================
+   NOAH HÄGGLUND — ISOMETRIC CARD STACK (light / glass variant)
+   Tokens at the top — change to re-skin.
+   =================================================================== */
+
+:root {
+  --bg: #f4f4f2;
+  --text: #141414;
+  --text-dim: #8a8a86;
+  --card-bg: rgba(255, 255, 255, 0.55);
+  --card-border: rgba(255, 255, 255, 0.9);
+  --accent: #c9824d;
+
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --edge: clamp(16px, 3vw, 32px);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden; /* the whole page IS the stack — no page scroll */
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+/* ---------- pill nav, top-left ---------- */
+.pill-nav {
+  position: fixed;
+  top: var(--edge);
+  left: var(--edge);
+  z-index: 20;
+  display: flex;
+  gap: 2px;
+}
+.pill-nav-item {
+  padding: 12px 18px;
+  background: rgba(20, 20, 20, 0.04);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.pill-nav-item:first-child { border-radius: 8px 4px 4px 8px; }
+.pill-nav-item:last-child { border-radius: 4px 8px 8px 4px; }
+.pill-nav-item.is-active {
+  background: rgba(20, 20, 20, 0.06);
+  color: var(--text);
+}
+.pill-nav-item:hover { background: rgba(20, 20, 20, 0.08); color: var(--text); }
+
+@media (max-width: 640px) {
+  .pill-nav-item:not(:first-child) { display: none; }
+}
+
+/* ---------- bottom-left url badge ---------- */
+.badge {
+  position: fixed;
+  z-index: 20;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #141414;
+  color: #f4f4f2;
+  font-size: 0.68rem;
+}
+.badge-bottom-left { bottom: var(--edge); left: var(--edge); }
+
+/* ---------- bottom-right pill buttons ---------- */
+.pill-group {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  gap: 2px;
+}
+.badge-bottom-right { bottom: var(--edge); right: var(--edge); }
+.pill-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  background: rgba(20, 20, 20, 0.05);
+  color: var(--text-dim);
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.pill-btn:first-child { border-radius: 6px 3px 3px 6px; }
+.pill-btn:last-child { border-radius: 3px 6px 6px 3px; }
+.pill-btn.is-active { background: rgba(20, 20, 20, 0.08); color: var(--text); }
+.pill-btn:hover { color: var(--text); }
+
+@media (max-width: 640px) {
+  .badge-bottom-right { display: none; }
+}
+
+/* =====================================================
+   THE STACK — near-isometric, tight overlap, glass cards.
+   Positions are written by script.js every frame; CSS only
+   sets the constant tilt and the card's material.
+   ===================================================== */
+
+.stack-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2200px;
+  cursor: grab;
+  touch-action: none;
+}
+.stack-scene.is-dragging { cursor: grabbing; }
+
+.stack-track {
+  position: relative;
+  width: 1px;
+  height: 1px;
+  transform-style: preserve-3d;
+  /* mostly a Z rotation so cards stay near-vertical, a touch
+     of X for the isometric recede-into-distance read */
+  transform: rotateX(11deg) rotateZ(-32deg);
+}
+
+.card {
+  --card-w: clamp(210px, 19vw, 300px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-w);
+  aspect-ratio: 3 / 4;
+  margin-top: calc(var(--card-w) * 4 / 3 / -2);
+  margin-left: calc(var(--card-w) / -2);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.6) inset,
+    0 24px 48px rgba(20, 20, 20, 0.14),
+    0 4px 10px rgba(20, 20, 20, 0.08);
+  transition: box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.card.is-front .card-face {
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.8) inset,
+    0 36px 64px rgba(20, 20, 20, 0.22),
+    0 6px 16px rgba(20, 20, 20, 0.12);
+}
+
+.card-video,
+.card-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.9) brightness(0.97);
+  transition: filter 0.4s var(--ease);
+}
+.card.is-front .card-video,
+.card.is-front .card-fallback {
+  filter: saturate(1.05) brightness(1);
+}
+
+/* gradient placeholder — remove once a real <source> loads */
+.card-fallback {
+  background:
+    radial-gradient(circle at 25% 15%, rgba(201, 130, 77, 0.25), transparent 55%),
+    radial-gradient(circle at 80% 85%, rgba(111, 168, 160, 0.22), transparent 55%),
+    linear-gradient(160deg, #e9e8e4, #d7d5cf);
+}
+
+/* glassy diagonal highlight streak across the upper-left,
+   like light catching an acrylic sheet */
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.08) 18%,
+    rgba(255, 255, 255, 0) 35%
+  );
+}
+
+/* ---------- active card info, bottom-left of the scene ---------- */
+.active-info {
+  position: fixed;
+  left: var(--edge);
+  bottom: calc(var(--edge) + 46px);
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.active-info-index { color: var(--accent); }
+.active-info-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.active-info-tag { color: var(--text-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card-face, .card-video, .card-fallback { transition: none; }
+}

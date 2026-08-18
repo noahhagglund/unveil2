@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noah Hägglund — Work</title>
+<meta name="description" content="Sound design and music by Noah Hägglund — Stockholm.">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="pill-nav" aria-label="Primary">
+  <a href="#" class="pill-nav-item is-active">Noah Hägglund</a>
+  <a href="#" class="pill-nav-item">Work</a>
+  <a href="#" class="pill-nav-item">Studio</a>
+  <a href="#" class="pill-nav-item">Contact</a>
+</nav>
+
+<div class="badge badge-bottom-left mono">noahhagglund.com</div>
+
+<div class="pill-group badge-bottom-right">
+  <button class="pill-btn is-active" id="overviewBtn" type="button">Overview</button>
+  <button class="pill-btn" id="indexBtn" type="button">Index</button>
+</div>
+
+<!-- =====================================================
+     Isometric, infinitely-looping card stack. Cards are
+     positioned individually by script.js so they can wrap
+     around forever — see script.js for the loop math.
+
+     TO ADD YOUR OWN VIDEOS: point each <source src="..."> at
+     an .mp4 in /assets. Until you do, each card shows a
+     soft placeholder gradient.
+     ===================================================== -->
+<main class="stack-scene" id="stackScene">
+  <div class="stack-track" id="stackTrack">
+
+    <article class="card" data-title="Nightbound" data-tag="Feature Film · Sound Design">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-01.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Hollow Grove" data-tag="Indie Game · Original Score">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-02.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Salt &amp; Static" data-tag="Brand Sonic Identity">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-03.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Echo Chamber" data-tag="Gallery Installation">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-04.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Low Tide" data-tag="Short Film · Foley">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-05.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Glass House" data-tag="Ad Campaign · Music">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-06.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Minima" data-tag="DJ Sets · Live Mixes">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-07.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Driftwood" data-tag="Documentary · Mix">
+      <div class="card-face">
+        <video class="card-video" muted loop playsinline preload="metadata">
+          <source src="assets/project-08.mp4" type="video/mp4">
+        </video>
+        <div class="card-fallback" aria-hidden="true"></div>
+        <div class="card-sheen" aria-hidden="true"></div>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<div class="active-info">
+  <span class="mono active-info-index" id="activeIndex">01 / 08</span>
+  <h1 class="active-info-title" id="activeTitle">Nightbound</h1>
+  <span class="mono active-info-tag" id="activeTag">Feature Film · Sound Design</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
