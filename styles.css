@@ -1,0 +1,387 @@
+/* ===================================================================
+   NOAH HÄGGLUND — SOUND DESIGN & MUSIC PORTFOLIO
+   Token system — change :root to re-skin the whole site.
+   =================================================================== */
+
+:root {
+  --bg: #14141c;
+  --bg-alt: #1b1b25;
+  --text: #ede9e3;
+  --text-dim: #9a97a3;
+  --line: rgba(237, 233, 227, 0.12);
+  --accent-amber: #c9824d;
+  --accent-teal: #6fa8a0;
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --edge: clamp(24px, 5vw, 72px);
+  --max-w: 1500px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+a { color: inherit; text-decoration: none; }
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.eyebrow { color: var(--accent-teal); margin: 0 0 12px; }
+
+:focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 3px; }
+
+/* ---------- header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px var(--edge);
+  mix-blend-mode: difference;
+}
+.site-header .mark { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.08em; }
+.nav { display: flex; gap: 28px; }
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  position: relative;
+}
+.nav a::after {
+  content: "";
+  position: absolute; left: 0; bottom: -4px;
+  width: 0%; height: 1px;
+  background: currentColor;
+  transition: width 0.3s var(--ease);
+}
+.nav a:hover::after { width: 100%; }
+.counter { color: var(--text-dim); font-size: 0.7rem; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .counter { display: none; } }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--edge);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.2rem, 12vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+}
+.line-mask { display: block; overflow: hidden; }
+.reveal {
+  display: block;
+  animation: rise 0.9s var(--ease) both;
+  animation-delay: calc(var(--d, 0) * 0.12s);
+}
+@keyframes rise {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+.hero-tagline { max-width: 30ch; font-size: clamp(1rem, 1.6vw, 1.25rem); color: var(--text-dim); margin: 0; }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 36px; left: var(--edge);
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.scroll-line { width: 40px; height: 1px; background: var(--text-dim); position: relative; overflow: hidden; }
+.scroll-line::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--accent-amber);
+  transform: translateX(-100%);
+  animation: scrollLine 2.2s var(--ease) infinite;
+}
+@keyframes scrollLine {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { animation: none; }
+  .scroll-line::after { animation: none; }
+}
+
+/* =====================================================
+   WORK — isometric scroll-through stack.
+
+   .stack-section is tall on purpose: its height is the
+   scroll distance the JS maps to horizontal progress
+   through the cards. .stack-sticky pins for that whole
+   distance. Everything visual lives in .stack-track,
+   which is tilted once into an isometric plane; script.js
+   then only ever translates it along its own local X axis.
+   ===================================================== */
+.stack-section {
+  position: relative;
+  /* height set inline by script.js based on card count,
+     this is just a sane fallback before JS runs */
+  height: 500vh;
+}
+
+.stack-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stack-heading {
+  position: absolute;
+  top: clamp(90px, 12vh, 140px);
+  left: var(--edge);
+  z-index: 2;
+  margin: 0;
+}
+
+.stack-scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2400px;
+}
+
+.stack-track {
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  gap: clamp(64px, 8vw, 120px);
+  /* the isometric tilt: rotate the whole row back on X, then
+     spin it on Z so the row reads as a diagonal receding line */
+  transform:
+    translate3d(var(--scroll-x, 0px), 0, 0)
+    rotateX(58deg)
+    rotateZ(-38deg);
+  will-change: transform;
+}
+
+.card {
+  flex: none;
+  width: clamp(200px, 20vw, 300px);
+  aspect-ratio: 3 / 4;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(0) scale(1);
+  transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
+  cursor: pointer;
+}
+
+.card:hover,
+.card:focus-within {
+  /* pop toward the viewer along the card's own normal, +
+     a touch of scale — this is the "highlight" on hover */
+  transform: translateZ(90px) scale(1.06);
+  z-index: 5;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 0 rgba(237, 233, 227, 0.06),
+    0 30px 60px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.5s var(--ease);
+}
+.card:hover .card-face,
+.card:focus-within .card-face {
+  box-shadow:
+    0 2px 0 var(--accent-amber),
+    0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* thin "spine" along one edge so each card reads as a
+   sleeve with a bit of thickness, like vinyl in a crate */
+.card-face::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--accent-amber), var(--accent-teal));
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.card-video,
+.card-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(0.95);
+  transition: filter 0.5s var(--ease);
+}
+.card:hover .card-video,
+.card:hover .card-fallback,
+.card:focus-within .card-video,
+.card:focus-within .card-fallback {
+  filter: brightness(1) saturate(1.1);
+}
+
+/* gradient placeholder — delete once a real <source> loads */
+.card-fallback {
+  background:
+    radial-gradient(circle at 25% 15%, rgba(201,130,77,0.4), transparent 55%),
+    radial-gradient(circle at 80% 85%, rgba(111,168,160,0.35), transparent 55%),
+    linear-gradient(160deg, #23232f, #101016);
+}
+
+.card-info {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  right: 14px;
+  z-index: 2;
+  transform: translateZ(1px);
+}
+.card-info .mono { color: var(--accent-teal); display: block; margin-bottom: 4px; }
+.card-info h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 0 0 2px;
+  color: var(--text);
+}
+.card-info p { margin: 0; color: var(--text-dim); font-size: 0.65rem; }
+
+.stack-hint {
+  position: absolute;
+  bottom: clamp(28px, 6vh, 56px);
+  left: var(--edge);
+  z-index: 2;
+  color: var(--text-dim);
+}
+
+/* Reduced motion / small screens: drop the 3D entirely and
+   fall back to a plain, calmly-scrolling horizontal strip */
+@media (prefers-reduced-motion: reduce), (max-width: 720px) {
+  .stack-section { height: auto; }
+  .stack-sticky { position: static; height: auto; padding: 80px var(--edge); }
+  .stack-heading { position: static; margin-bottom: 32px; }
+  .stack-scene { perspective: none; overflow-x: auto; justify-content: flex-start; padding-bottom: 12px; }
+  .stack-track {
+    transform: none !important;
+    gap: 20px;
+  }
+  .card { width: 220px; }
+  .card:hover, .card:focus-within { transform: translateY(-8px) scale(1.03); }
+}
+
+/* ---------- generic section rhythm (studio / contact) ---------- */
+section:not(.stack-section) {
+  padding: clamp(80px, 12vw, 160px) var(--edge);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- studio ---------- */
+.studio-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+}
+@media (max-width: 800px) { .studio-grid { grid-template-columns: 1fr; } }
+.studio-text p:not(.eyebrow) { color: var(--text-dim); max-width: 56ch; font-size: 1.05rem; }
+
+.channel-strip { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.channel-strip li {
+  display: flex; gap: 18px; align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+.channel-strip .mono { color: var(--accent-teal); font-size: 0.75rem; }
+
+/* ---------- contact ---------- */
+.contact { border-top: 1px solid var(--line); }
+.contact-email {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  border-bottom: 1px solid var(--accent-amber);
+  transition: color 0.3s var(--ease);
+}
+.contact-email:hover, .contact-email:focus-visible { color: var(--accent-amber); }
+.socials { margin-top: 40px; display: flex; gap: 24px; }
+.socials a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  transition: color 0.3s var(--ease);
+}
+.socials a:hover, .socials a:focus-visible { color: var(--text); }
+
+/* ---------- footer ---------- */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 28px var(--edge) 40px;
+  color: var(--text-dim);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
