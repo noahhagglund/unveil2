@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noah Hägglund — Sound Design & Music</title>
+<meta name="description" content="Sound designer and music maker based in Stockholm. Sound design, original score, and audio post for film, games, and brands.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot" aria-hidden="true">
+  <span class="cursor-label mono">View</span>
+</div>
+
+<header class="site-header">
+  <a class="mark" href="#top">N—H</a>
+  <nav class="nav" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#studio">Studio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <span class="mono counter" id="projectCounter">01 / 04</span>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="hero">
+    <p class="eyebrow mono">Sound Design — Music — Stockholm</p>
+    <h1 class="hero-title">
+      <span class="line-mask"><span class="reveal">Noah</span></span>
+      <span class="line-mask"><span class="reveal" style="--d:1">Hägglund</span></span>
+    </h1>
+    <p class="hero-tagline reveal" style="--d:2">
+      I build sound worlds for film, games, and brands — from the first sketch to the final mix.
+    </p>
+    <a href="#work" class="scroll-cue">
+      <span>Scroll to explore</span>
+      <span class="scroll-line" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- =====================================================
+       WORK — full-bleed video rows.
+       Each .project scales/fades in as it enters the viewport
+       and its <video> starts playing automatically (muted,
+       looped) only while visible, then pauses off-screen.
+
+       TO ADD YOUR OWN VIDEOS:
+       1. Drop an .mp4 (ideally under ~8MB, H.264, no audio
+          track needed since it's muted) into /assets
+       2. Point the <source src="..."> at it
+       3. Update data-title / data-category / data-year
+       ===================================================== -->
+  <section id="work" class="work">
+
+    <article class="project" data-index="01">
+      <div class="project-media">
+        <video class="project-video" muted loop playsinline preload="metadata"
+               poster="">
+          <source src="assets/project-01.mp4" type="video/mp4">
+        </video>
+        <div class="project-media-fallback" aria-hidden="true"></div>
+      </div>
+      <div class="project-info">
+        <span class="mono">01</span>
+        <h2>Nightbound</h2>
+        <p class="mono">Feature Film · Sound Design · 2026</p>
+      </div>
+    </article>
+
+    <article class="project" data-index="02">
+      <div class="project-media">
+        <video class="project-video" muted loop playsinline preload="metadata"
+               poster="">
+          <source src="assets/project-02.mp4" type="video/mp4">
+        </video>
+        <div class="project-media-fallback" aria-hidden="true"></div>
+      </div>
+      <div class="project-info">
+        <span class="mono">02</span>
+        <h2>Hollow Grove</h2>
+        <p class="mono">Indie Game · Original Score · 2025</p>
+      </div>
+    </article>
+
+    <article class="project" data-index="03">
+      <div class="project-media">
+        <video class="project-video" muted loop playsinline preload="metadata"
+               poster="">
+          <source src="assets/project-03.mp4" type="video/mp4">
+        </video>
+        <div class="project-media-fallback" aria-hidden="true"></div>
+      </div>
+      <div class="project-info">
+        <span class="mono">03</span>
+        <h2>Salt &amp; Static</h2>
+        <p class="mono">Brand Sonic Identity · 2025</p>
+      </div>
+    </article>
+
+    <article class="project" data-index="04">
+      <div class="project-media">
+        <video class="project-video" muted loop playsinline preload="metadata"
+               poster="">
+          <source src="assets/project-04.mp4" type="video/mp4">
+        </video>
+        <div class="project-media-fallback" aria-hidden="true"></div>
+      </div>
+      <div class="project-info">
+        <span class="mono">04</span>
+        <h2>Echo Chamber</h2>
+        <p class="mono">Gallery Installation · 2024</p>
+      </div>
+    </article>
+
+  </section>
+
+  <section id="studio" class="studio">
+    <div class="studio-grid">
+      <div class="studio-text reveal-on-scroll">
+        <p class="eyebrow mono">Studio</p>
+        <h2>Working from Stockholm, shipping anywhere.</h2>
+        <p>
+          I'm a sound designer and music maker working across film, games, and brand
+          identity. My process starts with listening — to a script, a rough cut, a
+          feeling — before a single sound is made. Replace this paragraph with your
+          own studio bio, tools, and the kind of projects you want to attract.
+        </p>
+      </div>
+      <ul class="channel-strip reveal-on-scroll">
+        <li><span class="mono">01</span><span>Sound Design</span></li>
+        <li><span class="mono">02</span><span>Original Score</span></li>
+        <li><span class="mono">03</span><span>Foley &amp; Field Recording</span></li>
+        <li><span class="mono">04</span><span>Mix &amp; Master</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="contact reveal-on-scroll">
+    <p class="eyebrow mono">Contact</p>
+    <h2>Let's make some noise.</h2>
+    <a href="mailto:hello@noahhagglund.com" class="contact-email">hello@noahhagglund.com</a>
+    <div class="socials">
+      <a href="#" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="mono">© 2026 Noah Hägglund</p>
+  <p class="mono">Built in Stockholm</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
